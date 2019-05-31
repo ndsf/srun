@@ -15,14 +15,16 @@ import java.util.regex.PatternSyntaxException;
 import com.google.gson.Gson;
 
 public class Srun {
-    private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36";
+    private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 " +
+            "(KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36";
 
     public static void main(String[] args) {
     }
 
     public static Map<String, String> login(String username, String password) throws IOException {
         String url = "https://gw.buaa.edu.cn:802/srun_portal_phone.php?ac_id=22";
-        String urlParameters = "action=login&ac_id=22&user_ip=&nas_ip=&user_mac=&username=" + username + "&password=" + password;
+        String urlParameters =
+                "action=login&ac_id=22&user_ip=&nas_ip=&user_mac=&username=" + username + "&password=" + password;
         sendPost(url, urlParameters);
         return getAjax(getUid());
     }
@@ -69,6 +71,10 @@ public class Srun {
     }
 
     private static Map<String, String> getAjax(String uid) throws IOException {
+        if (uid == null) {
+            return null;
+        }
+
         String url = "https://gw.buaa.edu.cn:804/beihang.php?route=getPackage&uid=" + uid + "&pid=1";
 
         String content = getFromUrl(url);
@@ -76,11 +82,11 @@ public class Srun {
         Map<String, String> map = new HashMap<>();
         map = gson.fromJson(content, map.getClass());
 
-        log("UID = " + uid);
+        /*log("UID = " + uid);
         log("套餐名称：" + map.get("billing_name"));
         log("已用流量：" + map.get("acount_used_bytes"));
         log("剩余流量：" + map.get("acount_remain_bytes"));
-        log("账户流量：" + map.get("acount_all_bytes"));
+        log("账户流量：" + map.get("acount_all_bytes"));*/
 
         return map;
     }

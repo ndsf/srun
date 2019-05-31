@@ -14,9 +14,17 @@ public class Interface extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("srun.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("srun.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("srun.fxml"));
+        Parent root = loader.load();
         primaryStage.setTitle("Srun");
         primaryStage.setScene(new Scene(root, 335, 600));
+
+        // TODO load settings
+
+        Controller controller = loader.getController();
+        controller.init();
+
         primaryStage.show();
     }
 }

@@ -7,48 +7,58 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Settings {
+public class Settings
+{
 
     private static Settings instance = new Settings();
 
-    public static Settings getInstance() {
+    public static Settings getInstance()
+    {
         return instance;
     }
 
     private static final String FILENAME = "Settings.json";
 
-    public boolean isRememberPassword() {
+    public boolean isRememberPassword()
+    {
         return rememberPassword;
     }
 
-    public void setRememberPassword(boolean rememberPassword) {
+    public void setRememberPassword(boolean rememberPassword)
+    {
         this.rememberPassword = rememberPassword;
         save();
     }
 
-    public boolean isAutoConnect() {
+    public boolean isAutoConnect()
+    {
         return autoConnect;
     }
 
-    public void setAutoConnect(boolean autoConnect) {
+    public void setAutoConnect(boolean autoConnect)
+    {
         this.autoConnect = autoConnect;
         save();
     }
 
-    public String getUsername() {
+    public String getUsername()
+    {
         return username;
     }
 
-    public void setUsername(String username) {
+    public void setUsername(String username)
+    {
         this.username = username;
         save();
     }
 
-    public String getPassword() {
+    public String getPassword()
+    {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(String password)
+    {
         this.password = password;
         save();
     }
@@ -58,42 +68,54 @@ public class Settings {
     private boolean rememberPassword = false;
     private boolean autoConnect = false;
 
-    private Settings() {
+    private Settings()
+    {
         // create file if not exists
 
         File file = new File(FILENAME);
-        if (!file.exists()) {
+        if (!file.exists())
+        {
             save();
             return;
         }
 
         // load from file
 
-        try (Reader reader = new FileReader(FILENAME)) {
+        try (Reader reader = new FileReader(FILENAME))
+        {
             Gson gson = new Gson();
 
             Map<String, Object> map = new HashMap<>();
             map = gson.fromJson(reader, map.getClass());
             //System.out.println(map);
-            //System.out.println(map.get("rememberPassword").getClass().getName());
+            //System.out.println(map.get
+            // ("rememberPassword").getClass()
+            // .getName());
 
             this.username = (String) map.get("username");
             this.password = (String) map.get("password");
-            this.rememberPassword = (boolean) map.get("rememberPassword");
-            this.autoConnect = (boolean) map.get("autoConnect");
-        } catch (IOException ex) {
+            this.rememberPassword = (boolean) map.get(
+                    "rememberPassword");
+            this.autoConnect = (boolean) map.get(
+                    "autoConnect");
+        } catch (IOException ex)
+        {
             ex.printStackTrace();
-        } catch (JsonSyntaxException ex) {
+        } catch (JsonSyntaxException ex)
+        {
             ex.printStackTrace();
         }
     }
 
-    private void save() {
+    private void save()
+    {
         // write to file
-        try (Writer writer = new FileWriter(FILENAME)) {
+        try (Writer writer = new FileWriter(FILENAME))
+        {
             Gson gson = new Gson();
             gson.toJson(this, writer);
-        } catch (IOException ex) {
+        } catch (IOException ex)
+        {
             ex.printStackTrace();
         }
     }

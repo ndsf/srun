@@ -3,15 +3,21 @@ package ndsf.srun;
 import com.jfoenix.controls.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.util.Pair;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Controller {
+public class Controller
+{
 
     private static final long PERIOD = 1000 * 60 * 30;
 
@@ -21,7 +27,8 @@ public class Controller {
     // settings from file
     // private Settings settings = new Settings();
 
-    public void init() {
+    public void init()
+    {
         // fill the username field
         usernameField.setText(Settings.getInstance().getUsername());
 
@@ -29,7 +36,8 @@ public class Controller {
         rememberPasswordCheckBox.setSelected(Settings.getInstance().isRememberPassword());
         autoConnectCheckBox.setSelected(Settings.getInstance().isAutoConnect());
 
-        // fill the password field if remembering password is enabled
+        // fill the password field if remembering
+        // password is enabled
         if (Settings.getInstance().isRememberPassword())
             passwordField.setText(Settings.getInstance().getPassword());
 
@@ -68,91 +76,117 @@ public class Controller {
     @FXML
     private Label remainBytesLabel;
 
-    public JFXTextField getUsernameField() {
+    @FXML
+    private LineChart<String, Double> usageChart;
+
+    public JFXTextField getUsernameField()
+    {
         return usernameField;
     }
 
-    public void setUsernameField(JFXTextField usernameField) {
+    public void setUsernameField(JFXTextField usernameField)
+    {
         this.usernameField = usernameField;
     }
 
-    public JFXPasswordField getPasswordField() {
+    public JFXPasswordField getPasswordField()
+    {
         return passwordField;
     }
 
-    public void setPasswordField(JFXPasswordField passwordField) {
+    public void setPasswordField(JFXPasswordField passwordField)
+    {
         this.passwordField = passwordField;
     }
 
-    public JFXCheckBox getRememberPasswordCheckBox() {
+    public JFXCheckBox getRememberPasswordCheckBox()
+    {
         return rememberPasswordCheckBox;
     }
 
-    public void setRememberPasswordCheckBox(JFXCheckBox rememberPasswordCheckBox) {
-        this.rememberPasswordCheckBox = rememberPasswordCheckBox;
+    public void setRememberPasswordCheckBox(JFXCheckBox rememberPasswordCheckBox)
+    {
+        this.rememberPasswordCheckBox =
+                rememberPasswordCheckBox;
     }
 
-    public JFXCheckBox getAutoConnectCheckBox() {
+    public JFXCheckBox getAutoConnectCheckBox()
+    {
         return autoConnectCheckBox;
     }
 
-    public void setAutoConnectCheckBox(JFXCheckBox autoConnectCheckBox) {
+    public void setAutoConnectCheckBox(JFXCheckBox autoConnectCheckBox)
+    {
         this.autoConnectCheckBox = autoConnectCheckBox;
     }
 
-    public JFXButton getLoginButton() {
+    public JFXButton getLoginButton()
+    {
         return loginButton;
     }
 
-    public void setLoginButton(JFXButton loginButton) {
+    public void setLoginButton(JFXButton loginButton)
+    {
         this.loginButton = loginButton;
     }
 
-    public JFXButton getLogoutButton() {
+    public JFXButton getLogoutButton()
+    {
         return logoutButton;
     }
 
-    public void setLogoutButton(JFXButton logoutButton) {
+    public void setLogoutButton(JFXButton logoutButton)
+    {
         this.logoutButton = logoutButton;
     }
 
-    public JFXTextArea getLogArea() {
+    public JFXTextArea getLogArea()
+    {
         return logArea;
     }
 
-    public void setLogArea(JFXTextArea logArea) {
+    public void setLogArea(JFXTextArea logArea)
+    {
         this.logArea = logArea;
     }
 
-    public Label getBillingNameLabel() {
+    public Label getBillingNameLabel()
+    {
         return billingNameLabel;
     }
 
-    public void setBillingNameLabel(Label billingNameLabel) {
+    public void setBillingNameLabel(Label billingNameLabel)
+    {
         this.billingNameLabel = billingNameLabel;
     }
 
-    public ProgressBar getProgressBar() {
+    public ProgressBar getProgressBar()
+    {
         return progressBar;
     }
 
-    public void setProgressBar(ProgressBar progressBar) {
+    public void setProgressBar(ProgressBar progressBar)
+    {
         this.progressBar = progressBar;
     }
 
-    public Label getRemainBytesLabel() {
+    public Label getRemainBytesLabel()
+    {
         return remainBytesLabel;
     }
 
-    public void setRemainBytesLabel(Label remainBytesLabel) {
+    public void setRemainBytesLabel(Label remainBytesLabel)
+    {
         this.remainBytesLabel = remainBytesLabel;
     }
 
-    public Label getAllBytesLabel() {
+    public Label getAllBytesLabel()
+    {
         return allBytesLabel;
     }
 
-    public void setAllBytesLabel(Label allBytesLabel) {
+    public void setAllBytesLabel(Label allBytesLabel)
+    {
         this.allBytesLabel = allBytesLabel;
     }
 
@@ -160,12 +194,14 @@ public class Controller {
     private Label allBytesLabel;
 
     @FXML
-    public void handleLoginButtonAction(ActionEvent event) {
+    public void handleLoginButtonAction(ActionEvent event)
+    {
         //Window owner = loginButton.getScene().getWindow();
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if (username.isEmpty() || password.isEmpty()) {
+        if (username.isEmpty() || password.isEmpty())
+        {
             return;
         }
 
@@ -177,7 +213,8 @@ public class Controller {
         timer.scheduleAtFixedRate(timerTask, 0, PERIOD);
     }
 
-    public void login(String username, String password) {
+    public void login(String username, String password)
+    {
         // remember username
         Settings.getInstance().setUsername(usernameField.getText());
 
@@ -193,49 +230,95 @@ public class Controller {
         loginButton.setDisable(true);
         logoutButton.setDisable(false);
 
-        try {
-            Map<String, String> map = Srun.login(username, password);
-
-            if (map == null) {
-                billingNameLabel.setText("登录失败");
-                return;
-            }
-
-            // update informations
-
-            billingNameLabel.setText(map.get("billing_name"));
-            remainBytesLabel.setText("剩余 " + map.get("acount_remain_bytes"));
-            allBytesLabel.setText("已用 " + map.get("acount_used_bytes") + " / " + map.get("acount_all_bytes"));
-
-            // get percentage
-
-            String remainBytesString = map.get("acount_remain_bytes");
-            remainBytesString = remainBytesString.substring(0, remainBytesString.length() - 1);
-            double remainBytes = Double.parseDouble(remainBytesString);
-
-            String allBytesString = map.get("acount_all_bytes");
-            allBytesString = allBytesString.substring(0, allBytesString.length() - 1);
-            double allBytes = Double.parseDouble(allBytesString);
-
-            if (allBytes != 0) {
-                double percentage = remainBytes / allBytes;
-                if (percentage >= 0 && percentage <= 1) {
-                    progressBar.setProgress(percentage);
-                }
-            }
-
-            log("Login as " + usernameField.getText() + ".");
-        } catch (IOException ex) {
+        try
+        {
+            updateInformations(Srun.getInformations(username, password));
+            log("Login as " + usernameField.getText() +
+                    ".");
+        } catch (IOException ex)
+        {
             log("Errored!");
         }
     }
 
-    @FXML
-    protected void handleLogoutButtonAction(ActionEvent event) {
-        //Window owner = logoutButton.getScene().getWindow();
-        String username = usernameField.getText();
-        if (username.isEmpty()) {
+    private void updateInformations(Map<String, String> map)
+    {
+        if (map == null)
+        {
+            billingNameLabel.setText("登录失败");
             return;
+        }
+
+        // update informations
+        billingNameLabel.setText(map.get("billing_name"));
+        remainBytesLabel.setText("剩余 " + map.get(
+                "acount_remain_bytes"));
+        allBytesLabel.setText("已用 " + map.get(
+                "acount_used_bytes") + " / " + map.get(
+                "acount_all_bytes"));
+
+        // get percentage
+        String remainBytesString = map.get(
+                "acount_remain_bytes");
+        remainBytesString = remainBytesString.substring(0,
+                remainBytesString.length() - 1);
+        double remainBytes =
+                Double.parseDouble(remainBytesString);
+
+        // add remain bytes to statistics
+        Statistics.getInstance().add(new Double(remainBytes));
+
+        String allBytesString = map.get("acount_all_bytes");
+        allBytesString = allBytesString.substring(0,
+                allBytesString.length() - 1);
+        double allBytes =
+                Double.parseDouble(allBytesString);
+
+        if (allBytes != 0)
+        {
+            double percentage = remainBytes / allBytes;
+            if (percentage >= 0 && percentage <= 1)
+            {
+                progressBar.setProgress(percentage);
+            }
+        }
+
+        // update line chart
+        XYChart.Series<String, Double> series =
+                new XYChart.Series<>();
+
+        for (int i = 0; i < Statistics.getInstance().getLocalDateTimeArrayList().size(); i++)
+        {
+            String time =
+                    Statistics.getInstance().getLocalDateTimeArrayList().get(i);
+            Double usage =
+                    Statistics.getInstance().getDoubleArrayList().get(i);
+            series.getData().add(new XYChart.Data<>(time,
+                    usage));
+        }
+
+        usageChart.getData().add(series);
+    }
+
+    @FXML
+    protected void handleLogoutButtonAction(ActionEvent event)
+    {
+        //Window owner = logoutButton.getScene()
+        // .getWindow();
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+        if (username.isEmpty())
+        {
+            return;
+        }
+
+        // update informations
+        try
+        {
+            updateInformations(Srun.getInformations(username, password));
+        } catch (IOException ex)
+        {
+            ex.printStackTrace();
         }
         logout(username);
 
@@ -250,7 +333,8 @@ public class Controller {
     }
 
     @FXML
-    protected void handleRememberPasswordCheckBox(ActionEvent event) {
+    protected void handleRememberPasswordCheckBox(ActionEvent event)
+    {
         setRememberPassword(rememberPasswordCheckBox.isSelected());
         /*if (rememberPasswordCheckBox.isSelected()) {
             System.out.println("Remember password");
@@ -262,7 +346,8 @@ public class Controller {
     }
 
     @FXML
-    protected void handleAutoConnectCheckBox(ActionEvent event) {
+    protected void handleAutoConnectCheckBox(ActionEvent event)
+    {
         setAutoConnect(autoConnectCheckBox.isSelected());
         /*if (autoConnectCheckBox.isSelected()) {
             System.out.println("Auto connect");
@@ -276,7 +361,8 @@ public class Controller {
         }*/
     }
 
-    private void setRememberPassword(boolean option) {
+    private void setRememberPassword(boolean option)
+    {
         // refuse if auto connect is enabled
 
         if (Settings.getInstance().isAutoConnect() && option)
@@ -286,12 +372,14 @@ public class Controller {
         Settings.getInstance().setRememberPassword(option);
     }
 
-    private void setAutoConnect(boolean option) {
+    private void setAutoConnect(boolean option)
+    {
         // enable auto connect in settings
 
         Settings.getInstance().setAutoConnect(option);
 
-        if (option) {
+        if (option)
+        {
             // also set remember password if option is true
 
             Settings.getInstance().setRememberPassword(true);
@@ -299,20 +387,24 @@ public class Controller {
         }
     }
 
-    private void logout(String username) {
+    private void logout(String username)
+    {
         usernameField.setDisable(false);
         passwordField.setDisable(false);
         loginButton.setDisable(false);
         logoutButton.setDisable(true);
-        try {
+        try
+        {
             Srun.logout(username);
-        } catch (IOException ex) {
+        } catch (IOException ex)
+        {
             log("Errored!");
         }
         log("Logout as " + username + ".");
     }
 
-    private void log(String s) {
+    private void log(String s)
+    {
         logArea.appendText("\n" + s);
     }
 }

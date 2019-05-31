@@ -14,68 +14,105 @@ import java.util.regex.PatternSyntaxException;
 
 import com.google.gson.Gson;
 
-public class Srun {
-    private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 " +
-            "(KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36";
+public class Srun
+{
+    private static final String USER_AGENT = "Mozilla/5.0" +
+            " (Macintosh; Intel " +
+            "Mac OS X 10_14_3) AppleWebKit/537.36 " +
+            "(KHTML, like Gecko) Chrome/73.0.3683.86 " +
+            "Safari/537.36";
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
     }
 
-    public static Map<String, String> login(String username, String password) throws IOException {
-        String url = "https://gw.buaa.edu.cn:802/srun_portal_phone.php?ac_id=22";
+    public static Map<String, String> login(String username, String password) throws IOException
+    {
+        String url = "https://gw.buaa.edu" +
+                ".cn:802/srun_portal_phone" +
+                ".php?ac_id=22";
         String urlParameters =
-                "action=login&ac_id=22&user_ip=&nas_ip=&user_mac=&username=" + username + "&password=" + password;
+                "action=login&ac_id=22&user_ip=&nas_ip" +
+                        "=&user_mac=&username=" + username + "&password=" + password;
         sendPost(url, urlParameters);
         return getAjax(getUid());
     }
 
-    public static void logout(String username) throws IOException {
-        String url = "https://gw.buaa.edu.cn:802/include/auth_action.php";
-        String urlParameters = "action=logout&username=" + username + "&ajax=1";
+    public static Map<String, String> getInformations(String username,
+                                                      String password) throws IOException
+    {
+        return getAjax(getUid());
+    }
+
+    public static void logout(String username) throws IOException
+    {
+        String url = "https://gw.buaa.edu" +
+                ".cn:802/include/auth_action.php";
+        String urlParameters =
+                "action=logout&username=" + username +
+                        "&ajax=1";
         sendPost(url, urlParameters);
     }
 
-    private static void sendPost(String url, String urlParameters) throws IOException {
+    private static void sendPost(String url,
+                                 String urlParameters) throws IOException
+    {
         HttpURLConnection con = null;
-        byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
-        try {
+        byte[] postData =
+                urlParameters.getBytes(StandardCharsets.UTF_8);
+        try
+        {
 
             URL myurl = new URL(url);
             con = (HttpURLConnection) myurl.openConnection();
 
             con.setDoOutput(true);
             con.setRequestMethod("POST");
-            con.setRequestProperty("User-Agent", USER_AGENT);
-            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            con.setRequestProperty("User-Agent",
+                    USER_AGENT);
+            con.setRequestProperty("Content-Type",
+                    "application/x-www-form" +
+                            "-urlencoded");
 
-        } finally {
+        } finally
+        {
             if (con != null)
                 con.disconnect();
         }
     }
 
-    private static String getUid() throws IOException {
-        String url = "https://gw.buaa.edu.cn:804/beihangview.php";
+    private static String getUid() throws IOException
+    {
+        String url = "https://gw.buaa.edu" +
+                ".cn:804/beihangview.php";
 
         String content = getFromUrl(url);
-        try {
-            Pattern p = Pattern.compile("(?<=uid=).*?(?=&|$)");
+        try
+        {
+            Pattern p = Pattern.compile("(?<=uid=).*?" +
+                    "(?=&|$)");
             Matcher m = p.matcher(content);
-            if (m.find()) {
+            if (m.find())
+            {
                 return m.group();
             }
-        } catch (PatternSyntaxException ex) {
+        } catch (PatternSyntaxException ex)
+        {
             ex.printStackTrace();
         }
         return null;
     }
 
-    private static Map<String, String> getAjax(String uid) throws IOException {
-        if (uid == null) {
+    private static Map<String, String> getAjax(String uid) throws IOException
+    {
+        if (uid == null)
+        {
             return null;
         }
 
-        String url = "https://gw.buaa.edu.cn:804/beihang.php?route=getPackage&uid=" + uid + "&pid=1";
+        String url = "https://gw.buaa.edu.cn:804/beihang" +
+                ".php?route=getPackage&uid=" + uid +
+                "&pid=1";
 
         String content = getFromUrl(url);
         Gson gson = new Gson();
@@ -91,9 +128,11 @@ public class Srun {
         return map;
     }
 
-    private static String getFromUrl(String url) throws IOException {
+    private static String getFromUrl(String url) throws IOException
+    {
         HttpURLConnection con = null;
-        try {
+        try
+        {
 
             URL myurl = new URL(url);
             con = (HttpURLConnection) myurl.openConnection();
@@ -103,12 +142,14 @@ public class Srun {
             StringBuilder content;
 
             try (BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()))) {
+                    new InputStreamReader(con.getInputStream())))
+            {
 
                 String line;
                 content = new StringBuilder();
 
-                while ((line = in.readLine()) != null) {
+                while ((line = in.readLine()) != null)
+                {
                     content.append(line);
                     content.append(System.lineSeparator());
                 }
@@ -116,13 +157,15 @@ public class Srun {
 
             return content.toString();
 
-        } finally {
+        } finally
+        {
             if (con != null)
                 con.disconnect();
         }
     }
 
-    public static void log(String s) {
+    public static void log(String s)
+    {
         //Interface.addLogLine(s);
         System.out.println(s);
     }
@@ -149,7 +192,9 @@ public class Srun {
       "2019\/05\/1\/-2019\/6\/1",
       "2019-05-1--2019-6-1"
    ],
-   "billing_name":"\u8282\u5047\u65e5\u514d\u8d39-\u514d\u8d39\u533a\u57df-\u5b66\u751f\u514d\u8d391G-",
+   "billing_name":"\u8282\u5047\u65e5\u514d\u8d39-\u514d
+   \u8d39\u533a\u57df
+   -\u5b66\u751f\u514d\u8d391G-",
    "package_all":[
       {
          "user_id":"77382",

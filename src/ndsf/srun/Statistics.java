@@ -8,6 +8,9 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+/**
+ * 流量记录类，单例模式
+ */
 public class Statistics
 {
 
@@ -16,6 +19,10 @@ public class Statistics
             "Statistics.json";
     private static final double THRESHOLD = 1;
 
+    /**
+     * 当前本地时间
+     * @return 返回当前本地时间
+     */
     public ArrayList<String> getLocalDateTimeArrayList()
     {
         return localDateTimeArrayList;
@@ -27,6 +34,10 @@ public class Statistics
                 localDateTimeArrayList;
     }
 
+    /**
+     * 当前剩余流量
+     * @return 返回当前剩余流量
+     */
     public ArrayList<Double> getDoubleArrayList()
     {
         return doubleArrayList;
@@ -44,11 +55,18 @@ public class Statistics
 
     private static Statistics instance = new Statistics();
 
+    /**
+     * 获取流量记录类实例
+     * @return Statistics的实例
+     */
     public static Statistics getInstance()
     {
         return instance;
     }
 
+    /**
+     * 清空数据
+     */
     public void clear()
     {
         localDateTimeArrayList.clear();
@@ -65,6 +83,10 @@ public class Statistics
         }
     }
 
+    /**
+     * 初始化流量记录类
+     * 设定当前时间和剩余流量
+     */
     private Statistics()
     {
         // create file if not exists
@@ -106,6 +128,9 @@ public class Statistics
         }
     }
 
+    /**
+     * 保存流量信息
+     */
     private void save()
     {
         // write to file

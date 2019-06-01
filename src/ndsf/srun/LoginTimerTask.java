@@ -3,6 +3,9 @@ package ndsf.srun;
 import java.io.IOException;
 import java.util.TimerTask;
 
+/**
+ * 定时登录，防止掉线类
+ */
 public class LoginTimerTask extends TimerTask
 {
 

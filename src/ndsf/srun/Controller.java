@@ -16,6 +16,12 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * 处理控制器内的submit事件
+ *
+ * @author ndsf,limir
+ * @since 2019.5.26
+ */
 public class Controller
 {
 
@@ -27,6 +33,9 @@ public class Controller
     // settings from file
     // private Settings settings = new Settings();
 
+    /**
+     * 初始化界面
+     */
     public void init()
     {
         // fill the username field
@@ -213,6 +222,11 @@ public class Controller
         timer.scheduleAtFixedRate(timerTask, 0, PERIOD);
     }
 
+    /**
+     * 登录
+     * @param username 用户名
+     * @param password 密码
+     */
     public void login(String username, String password)
     {
         // remember username
@@ -241,6 +255,10 @@ public class Controller
         }
     }
 
+    /**
+     * 登录之后更新信息
+     * @param map 登录后爬取出来的信息
+     */
     private void updateInformations(Map<String, String> map)
     {
         if (map == null)
@@ -387,6 +405,10 @@ public class Controller
         }
     }
 
+    /**
+     * 登出
+     * @param username 用户名
+     */
     private void logout(String username)
     {
         usernameField.setDisable(false);

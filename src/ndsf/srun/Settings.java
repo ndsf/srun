@@ -7,6 +7,9 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 设置类，单例模式
+ */
 public class Settings
 {
 
@@ -68,6 +71,10 @@ public class Settings
     private boolean rememberPassword = false;
     private boolean autoConnect = false;
 
+    /**
+     * 初始化设置类
+     * 设置用户名、密码、记住密码和自动登录等属性
+     */
     private Settings()
     {
         // create file if not exists
@@ -107,6 +114,9 @@ public class Settings
         }
     }
 
+    /**
+     * 保存设置
+     */
     private void save()
     {
         // write to file

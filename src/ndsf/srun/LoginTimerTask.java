@@ -9,21 +9,27 @@ import java.util.TimerTask;
 public class LoginTimerTask extends TimerTask
 {
 
-    private Controller controller;
+    // private Controller controller;
 
-    public LoginTimerTask(Controller controller)
+    String username;
+
+    String password;
+
+    public LoginTimerTask(String username, String password)
     {
-        this.controller = controller;
+        this.username = username;
+        this.password = password;
     }
 
     @Override
     public void run()
     {
         //if (controller.getLoginButton().isDisable()) {
-        String username =
+        /*String username =
                 controller.getUsernameField().getText();
         String password =
-                controller.getPasswordField().getText();
+                controller.getPasswordField().getText();*/
+
         try
         {
             Srun.login(username, password);
@@ -31,6 +37,7 @@ public class LoginTimerTask extends TimerTask
         {
             ex.printStackTrace();
         }
+        
         //}
     }
 }

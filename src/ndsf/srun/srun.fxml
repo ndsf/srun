@@ -30,6 +30,31 @@
   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+  - Gluton services:
+
+  Gluon offers industry-leading solutions for Java on Mobile, on the Desktop,
+  and in the Cloud. We back these solutions up with an array of support options,
+  so that you can hit the ground running and build the best solution for your
+  team, business, and customers.
+
+  - Training:
+
+  Your location, at our offices, or over the web – we can train your team in
+  anything from Mobile Java to Java in the Cloud, and we can tailor the
+  training for your needs.
+
+  - Consulting:
+
+  Augment your team by bringing in our expert engineers. Instantly gain access
+  to experts in Java, JavaFX, and Java EE for as long as you need them – from
+  hours to months.
+
+  - JavaFX Long Term Support:
+
+  Gluon engineers are responsible for critical JavaFX libraries and co-lead
+  OpenJFX itself. We know JavaFX, and we are standing behind it with
+  industry-leading LTS offerings.
 -->
 
 <?import com.jfoenix.controls.JFXButton?>
@@ -292,3 +317,61 @@
         </Tab>
     </tabs>
 </JFXTabPane>
+
+
+<!--
+    Copyright (c) 2017, Gluon and/or its affiliates.
+    All rights reserved. Use is subject to license terms.
+
+    This file is available and licensed under the following license:
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions
+    are met:
+
+   - Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+   - Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in
+     the documentation and/or other materials provided with the distribution.
+   - Neither the name of Oracle Corporation and Gluon nor the names of its
+     contributors may be used to endorse or promote products derived
+     from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+  - Gluton services:
+
+  Gluon offers industry-leading solutions for Java on Mobile, on the Desktop,
+  and in the Cloud. We back these solutions up with an array of support options,
+  so that you can hit the ground running and build the best solution for your
+  team, business, and customers.
+
+  - Training:
+
+  Your location, at our offices, or over the web – we can train your team in
+  anything from Mobile Java to Java in the Cloud, and we can tailor the
+  training for your needs.
+
+  - Consulting:
+
+  Augment your team by bringing in our expert engineers. Instantly gain access
+  to experts in Java, JavaFX, and Java EE for as long as you need them – from
+  hours to months.
+
+  - JavaFX Long Term Support:
+
+  Gluon engineers are responsible for critical JavaFX libraries and co-lead
+  OpenJFX itself. We know JavaFX, and we are standing behind it with
+  industry-leading LTS offerings.
+-->

@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -16,12 +15,15 @@ import com.google.gson.Gson;
 
 /**
  * 主程序类
- * @author ndsf,limir
+ *
+ * @author ndsf, limir
  * @since 2019.5.26
  */
 public class Srun
 {
-    private static final String USER_AGENT = "Mozilla/5.0" + " (Macintosh; Intel " + "Mac OS X 10_14_3) AppleWebKit/537.36 " + "(KHTML, like Gecko) Chrome/73.0.3683.86 " + "Safari/537.36";
+    private static final String USER_AGENT = "Mozilla/5.0" + " (Macintosh; " +
+            "Intel " + "Mac OS X 10_14_3) AppleWebKit/537.36 " + "(KHTML, " +
+            "like Gecko) Chrome/73.0.3683.86 " + "Safari/537.36";
 
     public static void main(String[] args)
     {
@@ -37,9 +39,23 @@ public class Srun
      */
     public static Map<String, String> login(String username, String password) throws IOException
     {
-        String url = "https://gw.buaa.edu" + ".cn:802/srun_portal_phone" + ".php?ac_id=22";
-        String urlParameters = "action=login&ac_id=22&user_ip=&nas_ip" + "=&user_mac=&username=" + username + "&password=" + password;
+        // url of login page
+
+        String url = "https://gw.buaa.edu.cn:802/srun_portal_phone" +
+                ".php?ac_id=22";
+
+        // patameters of post
+
+        String urlParameters = "action=login&ac_id=22&user_ip=&nas_ip" +
+                "=&user_mac=&username=" + username + "&password=" + password;
+
+        // call the send post method to send a post
+
         sendPost(url, urlParameters);
+
+        // get the user's UID via crawling the page
+        // and get information through ajax
+
         return getAjax(getUid());
     }
 
@@ -51,8 +67,14 @@ public class Srun
      * @return 返回json解析出的map
      * @throws IOException IO异常
      */
-    public static Map<String, String> getInformations(String username, String password) throws IOException
+    public static Map<String, String> getInformation(String username,
+                                                     String password) throws IOException
     {
+        // simply crawling the information, thus no need to login
+
+        // get the user's UID via crawling the page
+        // and get information through ajax
+
         return getAjax(getUid());
     }
 
@@ -64,8 +86,16 @@ public class Srun
      */
     public static void logout(String username) throws IOException
     {
-        String url = "https://gw.buaa.edu" + ".cn:802/include/auth_action.php";
+        // url of logout page
+
+        String url = "https://gw.buaa.edu.cn:802/include/auth_action.php";
+
+        // patameters of post
+
         String urlParameters = "action=logout&username=" + username + "&ajax=1";
+
+        // call the send post method to send a post
+
         sendPost(url, urlParameters);
     }
 
@@ -78,24 +108,33 @@ public class Srun
      */
     private static void sendPost(String url, String urlParameters) throws IOException
     {
+        // send a post by means of Java Web
+
         HttpURLConnection con = null;
-        byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
+        // byte[] postData = urlParameters.getBytes(StandardCharsets.UTF_8);
 
         try
         {
+            // create a Java URL instance from the string
 
             URL myurl = new URL(url);
             con = (HttpURLConnection) myurl.openConnection();
 
             con.setDoOutput(true);
             con.setRequestMethod("POST");
+
+            // set the user agent the same as my computer
+
             con.setRequestProperty("User-Agent", USER_AGENT);
-            con.setRequestProperty("Content-Type", "application/x-www-form" + "-urlencoded");
+            con.setRequestProperty("Content-Type",
+                    "application/x-www-form" + "-urlencoded");
 
         } finally
         {
             if (con != null)
             {
+                // disconnect the connection if it's not null
+
                 con.disconnect();
             }
         }
@@ -109,13 +148,27 @@ public class Srun
      */
     private static String getUid() throws IOException
     {
-        String url = "https://gw.buaa.edu" + ".cn:804/beihangview.php";
+        // url of UID page
+
+        String url = "https://gw.buaa.edu.cn:804/beihangview.php";
+
+        // crawl the content from the page
 
         String content = getFromUrl(url);
+
+        // try to filter UID out of the content via Java regex
+
         try
         {
+            // create the pattern of UID
+
             Pattern p = Pattern.compile("(?<=uid=).*?" + "(?=&|$)");
+
+            // create a matcher from the content & the pattern
+
             Matcher m = p.matcher(content);
+
+            // return the UID if it's find
 
             if (m.find())
             {
@@ -125,6 +178,9 @@ public class Srun
         {
             ex.printStackTrace();
         }
+
+        // return null if the UID id not found
+
         return null;
     }
 
@@ -198,12 +254,22 @@ public class Srun
             return null;
         }
 
-        String url = "https://gw.buaa.edu.cn:804/beihang" + ".php?route=getPackage&uid=" + uid + "&pid=1";
+        // the url of ajax
+
+        String url = "https://gw.buaa.edu.cn:804/beihang.php?route" +
+                "=getPackage&uid=" + uid + "&pid=1";
+
+        // crawl the content of ajax from UID
 
         String content = getFromUrl(url);
+
+        // extract the information from Json string
+
         Gson gson = new Gson();
         Map<String, String> map = new HashMap<>();
         map = gson.fromJson(content, map.getClass());
+
+        // return the retrieved map
 
         return map;
     }
@@ -217,18 +283,26 @@ public class Srun
      */
     private static String getFromUrl(String url) throws IOException
     {
+        // create a connection of Java Web
+
         HttpURLConnection con = null;
         try
         {
+            // create a Java URL instance from the URL string
 
             URL myurl = new URL(url);
             con = (HttpURLConnection) myurl.openConnection();
 
+            // set the method to GET
+
             con.setRequestMethod("GET");
+
+            // feed the content read into a string builder
 
             StringBuilder content;
 
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream())))
+            try (BufferedReader in =
+                         new BufferedReader(new InputStreamReader(con.getInputStream())))
             {
 
                 String line;
@@ -241,12 +315,16 @@ public class Srun
                 }
             }
 
+            // return the string builder's content
+
             return content.toString();
 
         } finally
         {
             if (con != null)
             {
+                // disconnect the connection if it's not null
+
                 con.disconnect();
             }
         }
@@ -254,16 +332,15 @@ public class Srun
 
     /**
      * 代替println的字符串输出方法
+     *
      * @param s 字符串
      */
     public static void log(String s)
     {
-        //Interface.addLogLine(s);
+        // Interface.addLogLine(s);
+
+        // can further import log4j
+
         System.out.println(s);
     }
 }
-
-/*
-
-
- */

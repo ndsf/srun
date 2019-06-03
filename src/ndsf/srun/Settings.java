@@ -12,6 +12,7 @@ import java.util.Map;
  */
 public class Settings
 {
+    // singleton class
 
     private static Settings instance = new Settings();
 
@@ -20,7 +21,11 @@ public class Settings
         return instance;
     }
 
+    // filename of the settings file
+
     private static final String FILENAME = "Settings.json";
+
+    // getter & setter of settings
 
     public boolean isRememberPassword()
     {
@@ -30,6 +35,9 @@ public class Settings
     public void setRememberPassword(boolean rememberPassword)
     {
         this.rememberPassword = rememberPassword;
+
+        // save the settings to file after changed
+
         save();
     }
 
@@ -41,6 +49,9 @@ public class Settings
     public void setAutoConnect(boolean autoConnect)
     {
         this.autoConnect = autoConnect;
+
+        // save the settings to file after changed
+
         save();
     }
 
@@ -52,6 +63,9 @@ public class Settings
     public void setUsername(String username)
     {
         this.username = username;
+
+        // save the settings to file after changed
+
         save();
     }
 
@@ -63,8 +77,13 @@ public class Settings
     public void setPassword(String password)
     {
         this.password = password;
+
+        // save the settings to file after changed
+
         save();
     }
+
+    // variables of settings
 
     private String username = "";
     private String password = "";
@@ -90,14 +109,19 @@ public class Settings
 
         try (Reader reader = new FileReader(FILENAME))
         {
+            // extract settings from Settings.json file
+
             Gson gson = new Gson();
 
             Map<String, Object> map = new HashMap<>();
             map = gson.fromJson(reader, map.getClass());
+
             //System.out.println(map);
             //System.out.println(map.get
             // ("rememberPassword").getClass()
             // .getName());
+
+            // retrieve data from the map
 
             this.username = (String) map.get("username");
             this.password = (String) map.get("password");
@@ -120,8 +144,11 @@ public class Settings
     private void save()
     {
         // write to file
+
         try (Writer writer = new FileWriter(FILENAME))
         {
+            // write settings to file through json
+
             Gson gson = new Gson();
             gson.toJson(this, writer);
         } catch (IOException ex)

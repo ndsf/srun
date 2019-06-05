@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -40,6 +41,17 @@ public class Interface extends Application
             String username = in.next();
             System.out.println("请输入密码：");
             String password = in.next();
+
+            if (args[1].equals("logout"))
+            {
+                try
+                {
+                    Srun.logout(username);
+                } catch (IOException ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
 
             // try to login
 
@@ -89,6 +101,7 @@ public class Interface extends Application
         Parent root = loader.load();
         primaryStage.setTitle("Srun");
         primaryStage.setScene(new Scene(root, 335, 600));
+        primaryStage.getIcons().add(new Image())
 
         // get the controller through loader
 

@@ -26,10 +26,6 @@ public class Srun
             "Intel " + "Mac OS X 10_14_3) AppleWebKit/537.36 " + "(KHTML, " +
             "like Gecko) Chrome/73.0.3683.86 " + "Safari/537.36";
 
-    public static void main(String[] args)
-    {
-    }
-
     /**
      * 登录，输入用户名和密码
      *

@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: ndsf.srun.Interface
+Class-Path: lib/gson-2.8.5.jar lib/jfoenix-8.0.8.jar
+

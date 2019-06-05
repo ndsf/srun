@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="srun:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/srun_jar</output-path>
+    <root id="root">
+      <element id="archive" name="srun.jar">
+        <element id="module-output" name="srun" />
+      </element>
+      <element id="directory" name="lib">
+        <element id="library" level="project" name="gson-2.8.5" />
+        <element id="library" level="project" name="jfoenix-8.0.8" />
+      </element>
+    </root>
+  </artifact>
+</component>

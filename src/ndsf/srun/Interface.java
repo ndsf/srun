@@ -65,7 +65,7 @@ public class Interface extends Application
 
                 Timer timer = new Timer(true);
                 TimerTask timerTask = new LoginTimerTask(username, password);
-                timer.scheduleAtFixedRate(timerTask, 0, PERIOD);
+                timer.scheduleAtFixedRate(timerTask, PERIOD, PERIOD);
             } catch (IOException ex)
             {
                 ex.printStackTrace();

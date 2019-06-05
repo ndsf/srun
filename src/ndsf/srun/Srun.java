@@ -171,6 +171,8 @@ public class Srun
 
         String content = getFromUrl(url);
 
+        // System.out.println(content);
+
         // try to filter UID out of the content via Java regex
 
         try
@@ -187,6 +189,8 @@ public class Srun
 
             if (m.find())
             {
+                System.out.println();
+                System.out.println("UID = " + m.group());
                 return m.group();
             }
         } catch (PatternSyntaxException ex)
@@ -278,11 +282,15 @@ public class Srun
 
         String content = getFromUrl(url);
 
+        // System.out.println(content);
+
         // extract the information from Json string
 
         Gson gson = new Gson();
         Map<String, String> map = new HashMap<>();
         map = gson.fromJson(content, map.getClass());
+
+        // System.out.println(map);
 
         // return the retrieved map
 

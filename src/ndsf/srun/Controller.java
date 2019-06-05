@@ -238,7 +238,7 @@ public class Controller
 
         timer = new Timer(true);
         timerTask = new LoginTimerTask(username, password);
-        timer.scheduleAtFixedRate(timerTask, 0, PERIOD);
+        timer.scheduleAtFixedRate(timerTask, PERIOD, PERIOD);
     }
 
     /**
@@ -272,7 +272,7 @@ public class Controller
         {
             // update information from ajax
 
-            updateInformation(Srun.getInformation(username, password));
+            updateInformation(Srun.login(username, password));
             log("Login as " + usernameField.getText() +
                     ".");
         } catch (IOException ex)

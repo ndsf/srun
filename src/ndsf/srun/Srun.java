@@ -1,6 +1,7 @@
 package ndsf.srun;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -128,6 +129,20 @@ public class Srun
             con.setRequestProperty("User-Agent", USER_AGENT);
             con.setRequestProperty("Content-Type",
                     "application/x-www-form" + "-urlencoded");
+
+            // write the parameters to the URL
+
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(urlParameters);
+            wr.flush();
+            wr.close();
+
+            // print the response code
+
+            int responseCode = con.getResponseCode();
+            System.out.println("\nSending 'POST' request to URL : " + url);
+            System.out.println("Post parameters : " + urlParameters);
+            System.out.println("Response Code : " + responseCode);
 
         } finally
         {

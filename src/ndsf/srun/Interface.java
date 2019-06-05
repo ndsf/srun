@@ -44,6 +44,8 @@ public class Interface extends Application
 
             if (args[1].equals("logout"))
             {
+                // logout if the parameter is provided
+
                 try
                 {
                     Srun.logout(username);
@@ -101,7 +103,7 @@ public class Interface extends Application
         Parent root = loader.load();
         primaryStage.setTitle("Srun");
         primaryStage.setScene(new Scene(root, 335, 600));
-        primaryStage.getIcons().add(new Image())
+        primaryStage.getIcons().add(new Image(getClass().getResource("favicon.png").toExternalForm()));
 
         // get the controller through loader
 
